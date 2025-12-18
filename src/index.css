@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix Leaflet map white background on zoom out */
+.leaflet-container {
+  background-color: hsl(220, 20%, 6%) !important;
+}
+
+.leaflet-tile-container img {
+  max-width: none !important;
+}
+
+/* Ensure Leaflet popups appear above filters and legend */
+.leaflet-popup {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
+/* Prevent popup from being blocked by UI elements */
+.leaflet-popup-pane {
+  z-index: 9999 !important;
+}
+
+/* Ensure popup content is visible and not overlapped */
+.leaflet-popup-content-wrapper {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+  position: relative !important;
+}
+
+.leaflet-popup-content {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+  position: relative !important;
+}
+
+.leaflet-popup-tip {
+  z-index: 9999 !important;
+}
+
+/* Make sure filters and legend have lower z-index and don't block popup clicks */
+.leaflet-container {
+  z-index: 1;
+}
+
+/* Ensure map controls don't interfere */
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1000 !important;
+}
+
+/* Ensure dropdown menus appear above map and other UI elements */
+[data-radix-portal] {
+  z-index: 10000 !important;
+}
+
+[data-radix-popper-content-wrapper] {
+  z-index: 10000 !important;
+}
+
+/* Lower z-index for filters and legend to ensure popups are always on top */
+.absolute.z-\[999\] {
+  z-index: 999 !important;
+  pointer-events: none !important;
+}
+
+.absolute.z-\[999\] > * {
+  pointer-events: auto !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: hsl(222, 47%, 8%) !important;
+  color: hsl(220, 14%, 90%) !important;
+  border: 1px solid hsl(220, 13%, 15%) !important;
+  border-radius: 0.5rem !important;
+}
+
+.leaflet-popup-tip {
+  background-color: hsl(222, 47%, 8%) !important;
+  border: 1px solid hsl(220, 13%, 15%) !important;
+}
+
+.leaflet-popup-close-button {
+  color: hsl(220, 14%, 90%) !important;
+  padding: 4px 8px !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: hsl(220, 14%, 90%) !important;
+  background-color: hsl(215, 28%, 12%) !important;
+}
+
+@layer base {
+  :root {
+    --background: 220 20% 6%;
+    --foreground: 220 14% 90%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 220 14% 90%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 220 14% 90%;
+
+    --primary: 142 71% 45%;
+    --primary-foreground: 220 20% 6%;
+
+    --secondary: 215 28% 12%;
+    --secondary-foreground: 220 14% 90%;
+
+    --muted: 215 28% 17%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 199 89% 48%;
+    --accent-foreground: 220 20% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 14% 90%;
+
+    --warning: 48 96% 53%;
+    --warning-foreground: 220 20% 6%;
+
+    --border: 220 13% 15%;
+    --input: 220 13% 15%;
+    --ring: 142 71% 45%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors */
+    --surface: 222 47% 6%;
+    --elevated: 215 50% 6%;
+    --glow-primary: 142 71% 45%;
+    --text-primary: 220 14% 90%;
+    --text-secondary: 218 11% 65%;
+    --text-muted: 220 9% 46%;
+
+    --sidebar-background: 222 47% 6%;
+    --sidebar-foreground: 220 14% 90%;
+    --sidebar-primary: 142 71% 45%;
+    --sidebar-primary-foreground: 220 20% 6%;
+    --sidebar-accent: 215 28% 12%;
+    --sidebar-accent-foreground: 220 14% 90%;
+    --sidebar-border: 220 13% 15%;
+    --sidebar-ring: 142 71% 45%;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 142 71% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 48 96% 53%;
+    --warning-foreground: 222 47% 11%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 142 71% 45%;
+
+    --surface: 220 14% 98%;
+    --elevated: 0 0% 100%;
+    --text-primary: 222 47% 11%;
+    --text-secondary: 220 9% 46%;
+    --text-muted: 220 9% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .card-glow {
+    @apply relative overflow-hidden;
+    transition: all 0.3s ease;
+  }
+
+  .card-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.2), transparent, hsl(var(--accent) / 0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card-glow:hover::before {
+    opacity: 1;
+  }
+
+  .card-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px -10px hsl(var(--primary) / 0.15);
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted) / 0.3) 0%,
+      hsl(var(--muted) / 0.5) 50%,
+      hsl(var(--muted) / 0.3) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .glass {
+    @apply backdrop-blur-xl bg-background/80 border-border/50;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-count {
+    animation: countUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-out-right {
+    animation: slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-foreground tracking-tight;
+  }
+
+  .section-subtitle {
+    @apply text-sm text-muted-foreground mt-1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 4px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 16px currentColor, 0 0 24px currentColor;
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better focus states */
+*:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
