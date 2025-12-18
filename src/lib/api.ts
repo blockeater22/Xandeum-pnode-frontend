@@ -1,8 +1,25 @@
 /**
  * API Configuration
  * Base URL for the backend API
+ * 
+ * Priority:
+ * 1. VITE_API_URL environment variable (set in Vercel/deployment)
+ * 2. Production default (if in production mode)
+ * 3. Localhost fallback (for development)
  */
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const getApiBaseUrl = (): string => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  if (import.meta.env.PROD) {
+    return 'https://xandeum-pnode-backend-production.up.railway.app';
+  }
+  
+  return 'http://localhost:3000';
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 /**
  * Backend API response types
